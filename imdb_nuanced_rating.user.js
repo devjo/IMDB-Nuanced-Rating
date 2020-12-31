@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         IMDB Nuanced Rating
 // @namespace    https://github.com/devjo
-// @version      0.2.2
+// @version      0.2.3
 // @description  Normalizes the IMDB rating by supressing impact of 1 and 10 review bombing. Also indicates who the movie/series is aimed at.
 // @author       devjo
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
@@ -81,7 +81,15 @@
   // Extract the voting statistics from the ratings page
   function extractVoteStats(doc) {
     const rows = $c('.article.listo table[cellpadding] tr', doc).slice(1);
-    if (rows.length != 10) throw 'BUG: Failed to find the score rows on the ratings page';
+    if (rows.length != 10) {
+      const isChildPage = $c('.sectionHeading', doc).map(e => e.textContent.trim()).filter(s => s == "Under 18").length == 1;
+      // No child has rated the title, so fake something as it won't be used anyway.
+      if(isChildPage) {
+        return [{ score: 1, votes: 1}];
+      } else {
+        throw 'BUG: Failed to find the score rows on the ratings page';
+      }
+    }
 
     return rows.map(row => {
       return {

@@ -1,11 +1,14 @@
 // ==UserScript==
 // @name         IMDB Nuanced Rating
 // @namespace    https://github.com/devjo
-// @version      0.1
+// @version      0.2.0
 // @description  Normalizes the IMDB rating by supressing impact of 1 and 10 review bombing. Also indicates who the movie/series is aimed for.
 // @author       devjo
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @match        https://www.imdb.com/title/*
+// @updateURL    https://openuserjs.org/meta/devjo/IMDB_Nuanced_Rating.meta.js
+// @downloadURL  https://openuserjs.org/install/devjo/IMDB_Nuanced_Rating.user.js
+// @copyright    2020, devjo (https://openuserjs.org/users/devjo)
 // @grant        none
 // ==/UserScript==
 

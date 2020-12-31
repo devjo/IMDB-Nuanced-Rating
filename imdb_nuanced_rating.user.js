@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         IMDB Nuanced Rating
 // @namespace    https://github.com/devjo
-// @version      0.2.0
-// @description  Normalizes the IMDB rating by supressing impact of 1 and 10 review bombing. Also indicates who the movie/series is aimed for.
+// @version      0.2.1
+// @description  Normalizes the IMDB rating by supressing impact of 1 and 10 review bombing. Also indicates who the movie/series is aimed at.
 // @author       devjo
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // @match        https://www.imdb.com/title/*
@@ -33,7 +33,7 @@
     return value;
   }
   function log(...args) {
-    console.debug('NormalizedScore', ...args);
+    console.debug('NuancedRating', ...args);
   }
 
   // TTL cache of function return values. Provided function can be either sync or async.
@@ -151,7 +151,7 @@
 
   function updateScoreOnPage(newScore) {
     const el = assert($c('span[itemprop="ratingValue"]')[0], 'Failed to find original score on title page');
-    log(newScore, el);
+    // log(newScore, el);
     el.innerHTML = ''+newScore;
     el.classList.add('recomputed');
   }

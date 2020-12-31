@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         IMDB Nuanced Rating
 // @namespace    https://github.com/devjo
-// @version      0.2.1
+// @version      0.2.2
 // @description  Normalizes the IMDB rating by supressing impact of 1 and 10 review bombing. Also indicates who the movie/series is aimed at.
 // @author       devjo
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
@@ -151,7 +151,6 @@
 
   function updateScoreOnPage(newScore) {
     const el = assert($c('span[itemprop="ratingValue"]')[0], 'Failed to find original score on title page');
-    // log(newScore, el);
     el.innerHTML = ''+newScore;
     el.classList.add('recomputed');
   }
@@ -174,8 +173,6 @@
     const minSize = 16; // px;
     const meanSize = (maxSize + minSize) / 2;
     const mfRatio = audience.male / audience.female;
-    const m = audience.male / Math.min(audience.male, audience.female);
-    const f = audience.female / Math.min(audience.male, audience.female);
     let desc;
 
     if (mfRatio > 3) {
@@ -226,7 +223,6 @@
           .map(url => fetchDoc(url).then(extractVoteStats).then(computeScore)));
       return {total, female, male, child};
     });
-    console.log(scores);
 
     updateScoreOnPage(scores.total.score);
     addTargetAudienceToPage(estimateTargetAudience(scores));
